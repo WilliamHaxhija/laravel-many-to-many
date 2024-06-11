@@ -38,6 +38,20 @@
                 @enderror
             </div>
 
+            <div class="mb-3">
+                <h6>Technologies</h6>
+
+                @foreach ($technologies as $technology)
+                    <div class="form-check">
+                        <input @checked(in_array($technology->id, old('technologies', []))) class="form-check-input" type="checkbox" value="{{ $technology->id }}" id="{{ $technology->id }}" name="technologies[]">
+                        <label class="form-check-label" for="{{ $technology->id }}">{{ $technology->name }}</label>
+                    </div>
+                @endforeach
+                @error('technologies')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            </div>
+
             <div class="mt-4">
                 <label for="floatingTextarea2">Summary </label>
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="summary"

@@ -62,6 +62,10 @@ class ProjectController extends Controller
 
         $newProject->save();
 
+        if ($request->has('technologies')) {
+            $newProject->technologies()->attach($formData['technologies']);
+        }
+
         session()->flash('message', $newProject->name . ' successfully created.');
 
         return redirect()->route('admin.projects.show', ['project' => $newProject->slug]);
@@ -87,7 +91,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -115,6 +120,12 @@ class ProjectController extends Controller
         $project->slug = Str::slug($project->name);
 
         $project->update();
+
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($formData['technologies']);
+        } else {
+            $project->technologies()->detach();
+        }
 
         session()->flash('message', $project->name . ' successfully updated.');
 
@@ -144,7 +155,8 @@ class ProjectController extends Controller
                 'summary' => 'min:15|max:2000',
                 'client_name' => 'required',
                 'cover_image' => 'nullable|image',  //|max:256
-                'type_id' => 'nullable|exists:types,id'
+                'type_id' => 'nullable|exists:types,id',
+                'technologies' => 'nullable|exists:technologies,id'
             ]
         )->validate();
         return $validator;

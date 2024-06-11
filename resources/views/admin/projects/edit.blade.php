@@ -49,6 +49,26 @@
                 @enderror
             </div>
 
+            <div class="mb-3">
+                <h6>Technologies</h6>
+
+                @foreach ($technologies as $technology)
+                    <div class="form-check">
+                        @if ($errors->any())
+                            <input @checked(in_array($technology->id, old('technologies', []))) class="form-check-input" type="checkbox"
+                                value="{{ $technology->id }}" id="{{ $technology->id }}" name="technologies[]">
+                        @else
+                            <input @checked($project->technologies->contains($technology)) class="form-check-input" type="checkbox"
+                                value="{{ $technology->id }}" id="{{ $technology->id }}" name="technologies[]">
+                        @endif
+                        <label class="form-check-label" for="{{ $technology->id }}">{{ $technology->name }}</label>
+                    </div>
+                @endforeach
+                @error('technologies')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="form-floating mt-4">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" name="summary"
                     style="height: 100px">{{ old('title', $project->summary) }}</textarea>
