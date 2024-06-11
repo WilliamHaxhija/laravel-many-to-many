@@ -8,7 +8,7 @@
             </div>
         @endif
     </div>
-    <div>
+    <div class="mb-3">
         <h2 class="my-3">
             {{ $project->name }}
         </h2>
@@ -33,7 +33,7 @@
         @if ($project->cover_image)
             <div class="w-75 my-3">
                 <strong>Image:</strong>
-                <img class="w-100" src="{{ asset('storage/' . $project->cover_image) }}" alt="{{ $project->name }}">
+                <img class="w-100 mt-2" src="{{ asset('storage/' . $project->cover_image) }}" alt="{{ $project->name }}">
             </div>
         @endif
 

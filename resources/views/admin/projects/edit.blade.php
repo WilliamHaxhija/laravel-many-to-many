@@ -3,7 +3,7 @@
 @section('content')
     <h2 class="my-3">Edit Project</h2>
 
-    <form action="{{ route('admin.projects.update', ['project' => $project->slug]) }}" method="POST"
+    <form class="mb-3" action="{{ route('admin.projects.update', ['project' => $project->slug]) }}" method="POST"
         enctype="multipart/form-data">
         @csrf
         @method('PUT')
